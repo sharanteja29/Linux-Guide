@@ -1,64 +1,288 @@
-# Setup Linux Environment on Windows and MacOS
+# Linux & Docker Setup
 
-There are multiple ways to setup a Linux environment on a Windows or Mac machines such as `cloud vm`, `wsl2`, `virtualbox`, `Hyperkit` e.t.c.,. However what I would recommend is using a container as a Linux environment.
+## 1. Overview
 
-Just install Docker desktop, run the below command and create linux container of any distribution without worrying about the cost and connectivity issues.
+Using **Docker Desktop on Windows** to practice Linux with Ubuntu.
 
-### Docker Command to Run Ubuntu Linux Container in windows host (Persistent & Long-Term) 
+```text
+Windows
+   ↓
+Docker Desktop
+   ↓
+Docker Engine
+   ↓
+Ubuntu Container
+```
 
-- Create a folder with name `ubuntu-data` in your downloads folder.
+This provides a Linux environment without replacing Windows or installing a full VM.
 
-- Then run the below command in `poweshell` updating your `username`.
+---
 
-```bash
+## 2. Docker Basics
+
+### Image
+
+An **image** is a template used to create containers.
+
+```text
+ubuntu:latest
+```
+
+### Container
+
+A **container** is a running instance of an image.
+
+```text
+ubuntu-container
+```
+
+### Container vs VM
+
+- **Container:** shares the underlying kernel.
+- **VM:** runs its own guest OS and kernel.
+
+---
+
+## 3. Current Setup
+
+| Setting | Value |
+|---|---|
+| Host OS | Windows |
+| Docker | Docker Desktop |
+| Image | `ubuntu:latest` |
+| Container | `ubuntu-container` |
+| Hostname | `ubuntu-dev` |
+| CPU Limit | 2 CPUs |
+| Memory | 4 GB |
+| Timezone | `Asia/Kolkata` |
+| Shared Folder | `C:\Users\shara\Downloads\ubuntu-container` |
+| Container Folder | `/data` |
+| Ports | `2222 → 22`, `8080 → 80` |
+
+---
+
+## 4. Create Container
+
+```powershell
 docker run -dit `
   --name ubuntu-container `
   --hostname ubuntu-dev `
   --restart unless-stopped `
   --cpus="2" `
   --memory="4g" `
-  --mount type=bind,source="C:/Users/Monica Korla/Downloads/ubuntu-container",target=/data `
-  -v /var/run/docker.sock:/var/run/docker.sock `
+  --mount type=bind,source="C:/Users/shara/Downloads/ubuntu-container",target=/data `
   -p 2222:22 `
   -p 8080:80 `
   --env TZ=Asia/Kolkata `
   --env LANG=en_US.UTF-8 `
-  ubuntu:latest /bin/bash              
+  ubuntu:latest /bin/bash
 ```
 
-### Docker Command to Run Ubuntu Linux Container in mac or linux host (Persistent & Long-Term) 
+### Important Options
+
+| Option | Purpose |
+|---|---|
+| `-d` | Run in background |
+| `-it` | Interactive terminal |
+| `--name` | Container name |
+| `--hostname` | Linux hostname |
+| `--cpus` | CPU limit |
+| `--memory` | Memory limit |
+| `--mount` | Windows folder → container |
+| `-p` | Port mapping |
+| `--env` | Environment variable |
+
+---
+
+## 5. Bind Mount
+
+Windows folder:
+
+```text
+C:\Users\shara\Downloads\ubuntu-container
+```
+
+Inside Ubuntu:
+
+```text
+/data
+```
+
+```text
+Windows Folder
+      ↕
+   Bind Mount
+      ↕
+Container /data
+```
+
+Example:
 
 ```bash
-docker run -dit \
-  --name ubuntu-container \
-  --hostname ubuntu-dev \
-  --restart unless-stopped \
-  --cpus="2" \
-  --memory="4g" \
-  --mount type=bind,source=/tmp/ubuntu-data,target=/data \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -p 2222:22 \
-  -p 8080:80 \
-  --env TZ=Asia/Kolkata \
-  --env LANG=en_US.UTF-8 \
-  ubuntu:latest /bin/bash
-                 
+cd /data
+touch test.txt
 ```
 
-## Explanation of Each Parameter
+The file will also appear in the Windows folder.
 
-| Parameter | Description |
-|-----------|-------------|
-| `-dit` | Runs the container in **detached (-d)**, **interactive (-i)**, and **terminal (-t)** mode. |
-| `--name ubuntu-container` | Assigns a name to the container for easy management. |
-| `--hostname ubuntu-dev` | Sets the container’s hostname. |
-| `--restart unless-stopped` | Ensures the container restarts automatically unless manually stopped. |
-| `--cpus="2"` | Limits the container to **2 CPU cores**. |
-| `--memory="4g"` | Allocates **4GB RAM** to the container. |
-| `--mount type=bind,source=C:/ubuntu-data,target=/data` | **Mounts a folder** from Windows into the container to persist data. |
-| `-v /var/run/docker.sock:/var/run/docker.sock` | Allows running Docker commands inside the container (optional). |
-| `-p 2222:22` | Maps port **2222** on the host to **22** (SSH) inside the container. |
-| `-p 8080:80` | Maps port **8080** on the host to **80** (for web services). |
-| `--env TZ=Asia/Kolkata` | Sets the **timezone** (modify based on your location). |
-| `--env LANG=en_US.UTF-8` | Sets the **language** settings inside the container. |
-| `ubuntu:latest /bin/bash` | Uses the latest **Ubuntu** image and runs Bash shell. |
+---
+
+## 6. Port Mapping
+
+Format:
+
+```text
+HOST_PORT:CONTAINER_PORT
+```
+
+Current mappings:
+
+```text
+2222 → 22
+8080 → 80
+```
+
+- `22` → commonly used for SSH
+- `80` → commonly used for HTTP
+
+Mapping a port does not automatically start a service.
+
+---
+
+## 7. Enter Ubuntu
+
+From PowerShell:
+
+```powershell
+docker exec -it ubuntu-container /bin/bash
+```
+
+Inside the container:
+
+```text
+root@ubuntu-dev:/#
+```
+
+- `root` → current user
+- `ubuntu-dev` → hostname
+- `/` → current directory
+
+Exit:
+
+```bash
+exit
+```
+
+---
+
+## 8. Useful Docker Commands
+
+```powershell
+docker ps
+docker ps -a
+docker images
+
+docker start ubuntu-container
+docker stop ubuntu-container
+docker restart ubuntu-container
+
+docker logs ubuntu-container
+docker inspect ubuntu-container
+
+docker exec -it ubuntu-container /bin/bash
+```
+
+---
+
+## 9. Useful Linux Commands
+
+```bash
+pwd                  # Current directory
+ls -la               # List files
+cd /data             # Shared folder
+
+whoami               # Current user
+hostname             # Hostname
+uname -a             # System information
+cat /etc/os-release  # OS information
+
+df -h                # Disk usage
+free -h              # Memory usage
+ps                   # Processes
+```
+
+---
+
+## 10. Important Linux Directories
+
+```text
+/       → Root
+/root   → Root user's home
+/home   → User home directories
+/etc    → Configuration
+/usr    → Programs and libraries
+/var    → Logs and variable data
+/tmp    → Temporary files
+/dev    → Device files
+/proc   → Process/kernel information
+/sys     → Kernel/device information
+/data   → Windows bind-mounted folder
+```
+
+---
+
+## 11. Windows vs Linux
+
+### Windows
+
+```text
+PS C:\Users\shara>
+```
+
+### Ubuntu Container
+
+```text
+root@ubuntu-dev:/#
+```
+
+Enter Ubuntu:
+
+```powershell
+docker exec -it ubuntu-container /bin/bash
+```
+
+Exit:
+
+```bash
+exit
+```
+
+---
+
+## 12. Mental Model
+
+```text
+Windows
+   ↓
+Docker Desktop
+   ↓
+Docker Engine
+   ↓
+ubuntu:latest
+   ↓
+ubuntu-container
+   ├── Linux filesystem
+   ├── /data → Windows folder
+   └── 2222→22 | 8080→80
+```
+
+### Learning Goals
+
+- Linux commands
+- Linux filesystem
+- Users & permissions
+- Processes
+- Networking
+- Shell scripting
+- Docker
+- Linux troubleshooting

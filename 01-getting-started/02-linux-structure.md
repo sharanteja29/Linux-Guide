@@ -1,10 +1,22 @@
-# Core components of a Linux Machine
+docker run -dit `
+  --name ubuntu-container `
+  --hostname ubuntu-dev `
+  --restart unless-stopped `
+  --cpus="2" `
+  --memory="4g" `
+  --mount type=bind,source="C:/Users/shara/Downloads/ubuntu-container",target=/data `
+  -v /var/run/docker.sock:/var/run/docker.sock `
+  -p 2222:22 `
+  -p 8080:80 `
+  --env TZ=Asia/Kolkata `
+  --env LANG=en_US.UTF-8 `
+  ubuntu:latest /bin/bash# Core components of a Linux Machine
 
 ```plaintext
 +----------------------------------------------------+
 | User Applications (Vim, Docker, Apache, etc.)     |
 +----------------------------------------------------+
-| Shell (Bash, Zsh, Fish, etc.)                     |  <-- Part of the OS
+| Shell (Bash, Zsh, Fish, etc.) -CLI                |  <-- Part of the OS
 +----------------------------------------------------+
 | System Libraries (glibc, libc, OpenSSL, etc.)     |  <-- Part of the OS
 +----------------------------------------------------+
