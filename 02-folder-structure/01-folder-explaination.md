@@ -464,7 +464,7 @@ ls
 Detailed listing:
 
 ```bash
-ls -la
+ls -ltr
 ```
 
 Show current directory:
