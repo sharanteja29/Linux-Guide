@@ -9,7 +9,7 @@ Key files involved in user management:
 - `/etc/group` – Stores group information.
 - `/etc/gshadow` – Stores secure group details.
 
-## Creating Users in Linux
+## Creating Users
 To create a new user in Linux, use:
 
 ### `useradd` Command (For most Linux distributions)
