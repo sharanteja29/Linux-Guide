@@ -1,0 +1,363 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\WINDOWS\System32> docker exec -it ubuntu-container /bin/bash
+root@ubuntu-dev:/# whoami
+root
+root@ubuntu-dev:/# id root
+uid=0(root) gid=0(root) groups=0(root)
+root@ubuntu-dev:/# cat /etc/groups
+cat: /etc/groups: No such file or directory
+root@ubuntu-dev:/# cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:ubuntu
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:ubuntu
+fax:x:21:
+voice:x:22:
+cdrom:x:24:ubuntu
+floppy:x:25:ubuntu
+tape:x:26:
+sudo:x:27:ubuntu
+audio:x:29:ubuntu
+dip:x:30:ubuntu
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:ubuntu
+sasl:x:45:
+plugdev:x:46:ubuntu
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+ubuntu:x:1000:
+_ssh:x:101:
+Sharan:x:1001:
+root@ubuntu-dev:/# useradd whoami
+root@ubuntu-dev:/# userdel whoami
+root@ubuntu-dev:/# whoami
+root
+root@ubuntu-dev:/# id
+uid=0(root) gid=0(root) groups=0(root)
+root@ubuntu-dev:/# groupadd developers
+root@ubuntu-dev:/# groupadd testers
+root@ubuntu-dev:/# cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:ubuntu
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:ubuntu
+fax:x:21:
+voice:x:22:
+cdrom:x:24:ubuntu
+floppy:x:25:ubuntu
+tape:x:26:
+sudo:x:27:ubuntu
+audio:x:29:ubuntu
+dip:x:30:ubuntu
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:ubuntu
+sasl:x:45:
+plugdev:x:46:ubuntu
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+ubuntu:x:1000:
+_ssh:x:101:
+Sharan:x:1001:
+developers:x:1002:
+testers:x:1003:
+root@ubuntu-dev:/# grep sharan /etc/passwd
+root@ubuntu-dev:/# grep Sharan /etc/passwd
+Sharan:x:1001:1001::/home/Sharan:/bin/bash
+root@ubuntu-dev:/# useradd -m -s /bin/bash john
+root@ubuntu-dev:/# useradd -m -s /bin/bash alice
+root@ubuntu-dev:/# useradd -m -s /bin/nash bob
+useradd: Warning: missing or non-executable shell '/bin/nash'
+root@ubuntu-dev:/# useradd -m -s /bin/bash bob
+useradd: user 'bob' already exists
+root@ubuntu-dev:/# usermod -s /bin/bash bob
+root@ubuntu-dev:/# grep john /etc/passwd
+john:x:1002:1004::/home/john:/bin/bash
+root@ubuntu-dev:/# grep alice /etc/passwd
+alice:x:1003:1005::/home/alice:/bin/bash
+root@ubuntu-dev:/# grep bob /etc/passwd
+bob:x:1004:1006::/home/bob:/bin/bash
+root@ubuntu-dev:/# passwd john
+New password:
+Retype new password:
+passwd: password updated successfully
+root@ubuntu-dev:/# passwd alice
+New password:
+Retype new password:
+passwd: password updated successfully
+root@ubuntu-dev:/# passwd bob
+New password:
+Retype new password:
+passwd: password updated successfully
+root@ubuntu-dev:/# passwd bob
+New password:
+Retype new password:
+passwd: password updated successfully
+root@ubuntu-dev:/# passwd bob
+New password:
+Retype new password:
+passwd: password updated successfully
+root@ubuntu-dev:/# usermod -aG developers testers john
+Usage: usermod [options] LOGIN
+
+Options:
+  -a, --append                  append the user to the supplemental GROUPS
+                                mentioned by the -G option without removing
+                                the user from other groups
+  -b, --badname                 allow bad names (DEPRECATED)
+  -c, --comment COMMENT         new value of the GECOS field
+  -d, --home HOME_DIR           new home directory for the user account
+  -e, --expiredate EXPIRE_DATE  set account expiration date to EXPIRE_DATE
+  -f, --inactive INACTIVE       set password inactive after expiration
+                                to INACTIVE
+  -g, --gid GROUP               force use GROUP as new primary group
+  -G, --groups GROUPS           new list of supplementary GROUPS
+  -h, --help                    display this help message and exit
+  -l, --login NEW_LOGIN         new value of the login name
+  -L, --lock                    lock the user account
+  -m, --move-home               move contents of the home directory to the
+                                new location (use only with -d)
+  -o, --non-unique              allow using duplicate (non-unique) UID
+  -p, --password PASSWORD       use encrypted password for the new password
+  -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+  -r, --remove                  remove the user from only the supplemental GROUPS
+                                mentioned by the -G option without removing
+                                the user from other groups
+  -R, --root CHROOT_DIR         directory to chroot into
+  -s, --shell SHELL             new login shell for the user account
+  -u, --uid UID                 new UID for the user account
+  -U, --unlock                  unlock the user account
+  -v, --add-subuids FIRST-LAST  add range of subordinate uids
+  -V, --del-subuids FIRST-LAST  remove range of subordinate uids
+  -w, --add-subgids FIRST-LAST  add range of subordinate gids
+  -W, --del-subgids FIRST-LAST  remove range of subordinate gids
+  -Z, --selinux-user SEUSER     new SELinux user mapping for the user account
+      --selinux-range SERANGE   new SELinux MLS range for the user account
+
+root@ubuntu-dev:/# usermod -aG developers john
+root@ubuntu-dev:/# usermod -aG testers john
+root@ubuntu-dev:/# usermod -aG testers bob
+root@ubuntu-dev:/# usermod -aG developers alice
+root@ubuntu-dev:/# usermod -g developers john
+root@ubuntu-dev:/# id john
+uid=1002(john) gid=1002(developers) groups=1002(developers),1003(testers)
+root@ubuntu-dev:/# grep john /etc/passwd
+john:x:1002:1002::/home/john:/bin/bash
+root@ubuntu-dev:/# grep bob /etc/passwd
+bob:x:1004:1006::/home/bob:/bin/bash
+root@ubuntu-dev:/# grep john /etc/shadow
+john:$y$j9T$5GpjQYCYaIj0iDfPpr11r.$wdhmhS.1oKjdOO/J0cXhJMorCgYzBCOgd/zqHFIqaH6:20727:0:99999:7:::
+root@ubuntu-dev:/# usermod -aG sudo john
+root@ubuntu-dev:/# passwd -l john
+passwd: password changed.
+root@ubuntu-dev:/# id john
+uid=1002(john) gid=1002(developers) groups=1002(developers),27(sudo),1003(testers)
+root@ubuntu-dev:/# passwd -u john
+passwd: password changed.
+root@ubuntu-dev:/# passwd -l john
+passwd: password changed.
+root@ubuntu-dev:/# grep john /etc/shadow
+john:!$y$j9T$5GpjQYCYaIj0iDfPpr11r.$wdhmhS.1oKjdOO/J0cXhJMorCgYzBCOgd/zqHFIqaH6:20727:0:99999:7:::
+root@ubuntu-dev:/# grep john /etc/passwd
+john:x:1002:1002::/home/john:/bin/bash
+root@ubuntu-dev:/# passwd -s john
+root@ubuntu-dev:/# passwd -S john
+john L 2026-10-01 0 99999 7 -1
+root@ubuntu-dev:/# passwd -u john
+passwd: password changed.
+root@ubuntu-dev:/# passwd -S john
+john P 2026-10-01 0 99999 7 -1
+root@ubuntu-dev:/# chage -M 90 john
+root@ubuntu-dev:/# passwd -S john
+john P 2026-10-01 0 90 7 -1
+root@ubuntu-dev:/# usermod -s /bin/sh alice
+root@ubuntu-dev:/# grep alice /etc/passwd
+alice:x:1003:1005::/home/alice:/bin/sh
+root@ubuntu-dev:/# usermod -s /bin/bash alice
+root@ubuntu-dev:/# grep alice /etc/passwd
+alice:x:1003:1005::/home/alice:/bin/bash
+root@ubuntu-dev:/# grep Sharan /etc/passwd
+Sharan:x:1001:1001::/home/Sharan:/bin/bash
+root@ubuntu-dev:/# getent john
+Unknown database: john
+Try `getent --help' or `getent --usage' for more information.
+root@ubuntu-dev:/# getent passwd john
+john:x:1002:1002::/home/john:/bin/bash
+root@ubuntu-dev:/# getent passwd alice
+alice:x:1003:1005::/home/alice:/bin/bash
+root@ubuntu-dev:/# getent group developers
+developers:x:1002:john,alice
+root@ubuntu-dev:/# getent group testers
+testers:x:1003:john,bob
+root@ubuntu-dev:/# grep testers /etc/group
+testers:x:1003:john,bob
+root@ubuntu-dev:/# groups alice
+alice : alice developers
+root@ubuntu-dev:/# userdel bob
+root@ubuntu-dev:/# ls /home
+Sharan  alice  bob  john  ubuntu
+root@ubuntu-dev:/# userdel -r alice
+userdel: alice mail spool (/var/mail/alice) not found
+root@ubuntu-dev:/# ls /home
+Sharan  bob  john  ubuntu
+root@ubuntu-dev:/# grep bob /etc/passwd
+root@ubuntu-dev:/# grep alice /etc/passwd
+root@ubuntu-dev:/# groupdel developers
+groupdel: cannot remove the primary group of user 'john'
+root@ubuntu-dev:/# userdel john
+userdel: group john not removed because it is not the primary group of user john.
+root@ubuntu-dev:/# groups john
+groups: 'john': no such user
+root@ubuntu-dev:/# grep john /etc/group
+john:x:1004:
+root@ubuntu-dev:/# grep john /etc/passwd
+root@ubuntu-dev:/# userdel -r john
+userdel: user 'john' does not exist
+root@ubuntu-dev:/# groupdel john
+root@ubuntu-dev:/# grep john /etc/group
+root@ubuntu-dev:/# ls /home
+Sharan  bob  john  ubuntu
+root@ubuntu-dev:/# rmdir /home/john
+rmdir: failed to remove '/home/john': Directory not empty
+root@ubuntu-dev:/# rmdir -r /home/john
+error: unexpected argument '-r' found
+
+  tip: to pass '-r' as a value, use '-- -r'
+
+Usage: rmdir [OPTION]... DIRECTORY...
+
+For more information, try '--help'.
+root@ubuntu-dev:/# rmdir --help
+Remove the DIRECTORY(ies), if they are empty.
+
+Usage: rmdir [OPTION]... DIRECTORY...
+
+Arguments:
+  <dirs>...
+
+Options:
+      --ignore-fail-on-non-empty
+          ignore each failure that is solely because a directory is
+          non-empty
+  -p, --parents
+          remove DIRECTORY and its ancestors; e.g., 'rmdir -p a/b/c'
+          is similar to rmdir a/b/c a/b a
+  -v, --verbose
+          output a diagnostic for every directory processed
+  -h, --help
+          Print help
+  -V, --version
+          Print version
+root@ubuntu-dev:/# rmdir --ignore-fail-on-non-empty john
+rmdir: failed to remove 'john': No such file or directory
+root@ubuntu-dev:/# rmdir --ignore-fail-on-non-empty /home/john
+root@ubuntu-dev:/# rmdir --ignore-fail-on-non-empty /home/bob
+root@ubuntu-dev:/# ls /home
+Sharan  bob  john  ubuntu
+root@ubuntu-dev:/# rmdir -r --ignore-fail-on-non-empty /home/bob
+error: unexpected argument '-r' found
+
+  tip: to pass '-r' as a value, use '-- -r'
+
+Usage: rmdir [OPTION]... DIRECTORY...
+
+For more information, try '--help'.
+root@ubuntu-dev:/# rmdir -p --ignore-fail-on-non-empty /home/bob
+root@ubuntu-dev:/# rmdir -p --ignore-fail-on-non-empty /home/john
+root@ubuntu-dev:/# ls /home
+Sharan  bob  john  ubuntu
+root@ubuntu-dev:/# groupdel developers
+root@ubuntu-dev:/# groupdel testers
+root@ubuntu-dev:/# grep developers /etc/group
+root@ubuntu-dev:/# grep testers /etc/group
+root@ubuntu-dev:/# rmdir /home/john
+rmdir: failed to remove '/home/john': Directory not empty
+root@ubuntu-dev:/# rmdir --ignore-fail-on-non-empty /home/john
+root@ubuntu-dev:/# rmdir /home/john
+rmdir: failed to remove '/home/john': Directory not empty
+root@ubuntu-dev:/# ls /home
+Sharan  bob  john  ubuntu
+root@ubuntu-dev:/# cd /home/john+
+bash: cd: /home/john+: No such file or directory
+root@ubuntu-dev:/# cd /home/john
+root@ubuntu-dev:/home/john# cd
+root@ubuntu-dev:~# ls
+root@ubuntu-dev:~# ls -la /home/bob
+total 20
+drwxr-x--- 2 1004 1006 4096 Oct  1 19:24 .
+drwxr-xr-x 1 root root 4096 Oct  1 19:40 ..
+-rw-r--r-- 1 1004 1006  220 Feb 13  2026 .bash_logout
+-rw-r--r-- 1 1004 1006 3771 Feb 13  2026 .bashrc
+-rw-r--r-- 1 1004 1006  807 Feb 13  2026 .profile
+root@ubuntu-dev:~# rm -r /home/john
+root@ubuntu-dev:~# rm -r /home/bob
+root@ubuntu-dev:~# ls /home
+Sharan  ubuntu
+root@ubuntu-dev:~# cd .
+root@ubuntu-dev:~# cd
+root@ubuntu-dev:~# cd /
+root@ubuntu-dev:/# cd /home/john
+bash: cd: /home/john: No such file or directory
+root@ubuntu-dev:/# cd /home
+root@ubuntu-dev:/home# pwd
+/home
+root@ubuntu-dev:/home# cd .
+root@ubuntu-dev:/home# cd
+root@ubuntu-dev:~# pwd
+/root
+root@ubuntu-dev:~# cd /
+root@ubuntu-dev:/# pwd
+/
+root@ubuntu-dev:/# cd /root
+root@ubuntu-dev:~# pwd
+/root
+root@ubuntu-dev:~# ls
+root@ubuntu-dev:~# ls -la
+total 20
+drwx------ 1 root root 4096 Sep 27 04:16 .
+drwxr-xr-x 1 root root 4096 Sep 25 01:15 ..
+-rw------- 1 root root  470 Sep 27 04:16 .bash_history
+-rw-r--r-- 1 root root 3106 Apr 20 14:16 .bashrc
+-rw-r--r-- 1 root root  132 Apr 20 14:16 .profile
+root@ubuntu-dev:~#
