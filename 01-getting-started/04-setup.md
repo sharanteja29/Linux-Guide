@@ -55,7 +55,7 @@ ubuntu-container
 | CPU Limit | 2 CPUs |
 | Memory | 4 GB |
 | Timezone | `Asia/Kolkata` |
-| Shared Folder | `C:\Users\shara\Downloads\ubuntu-container` |
+| Shared Folder | `C:\Users\user\Downloads\ubuntu-container` |
 | Container Folder | `/data` |
 | Ports | `2222 → 22`, `8080 → 80` |
 
@@ -70,7 +70,7 @@ docker run -dit `
   --restart unless-stopped `
   --cpus="2" `
   --memory="4g" `
-  --mount type=bind,source="C:/Users/shara/Downloads/ubuntu-container",target=/data `
+  --mount type=bind,source="C:/Users/user/Downloads/ubuntu-container",target=/data `
   -p 2222:22 `
   -p 8080:80 `
   --env TZ=Asia/Kolkata `
@@ -99,7 +99,7 @@ docker run -dit `
 Windows folder:
 
 ```text
-C:\Users\shara\Downloads\ubuntu-container
+C:\Users\user\Downloads\ubuntu-container
 ```
 
 Inside Ubuntu:
@@ -236,7 +236,7 @@ ps                   # Processes
 ### Windows
 
 ```text
-PS C:\Users\shara>
+PS C:\Users\user>
 ```
 
 ### Ubuntu Container
