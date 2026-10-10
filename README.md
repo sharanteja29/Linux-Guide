@@ -30,15 +30,6 @@ The repository currently contains these nine chapters:
 | [08 — Monitoring](./08-monitoring/) | System resources | Monitoring system usage and identifying potential resource issues. |
 | [09 — Disk Management](./09-disk-management/) | Storage | Block devices, partitions, filesystems, formatting, mounting/unmounting, LVM, swap, and storage inspection. |
 
-### Chapter 01 — Getting Started files
-
-- [Linux Fundamentals](./01-getting-started/01-fundamentals.md)
-- [Linux Structure and Setup Notes](./01-getting-started/02-linux-structure.md)
-- [Linux Distributions](./01-getting-started/03-linux-distributions.md)
-- [Linux & Docker Setup](./01-getting-started/04-setup.md)
-- [Package Managers](./01-getting-started/05-package-manager.md)
-
-Each chapter folder contains its own notes. Open the folder to explore the material for that topic.
 
 ## 🚀 How to Use This Repository
 
